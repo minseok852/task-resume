@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>작업 맥락 저장·복귀 확장</title>
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
+</head>
+<body><main>
+  <p class="badge">중단한 작업 이어가기</p>
+  <h1>작업 맥락 저장·복귀</h1>
+  <p id="status" role="status" aria-live="polite">저장 목록을 읽고 있습니다…</p>
+  <p id="error" role="alert" tabindex="-1" hidden></p>
+  <div class="actions"><button id="reload" type="button">목록 다시 읽기</button></div>
+  <section id="delete-panel" class="notice" hidden aria-labelledby="delete-title">
+    <h2 id="delete-title">작업 삭제 확인</h2><p id="delete-message"></p>
+    <div class="actions"><button id="delete-confirm" type="button" class="danger">삭제 확정</button><button id="delete-cancel" type="button">삭제 취소</button></div>
+  </section>
+  <section id="confirm-panel" class="confirm-panel" hidden aria-labelledby="confirm-title">
+    <h2 id="confirm-title">변경 확인</h2><p id="confirm-message"></p>
+    <div class="actions"><button id="confirm-accept" type="button">계속</button><button id="confirm-cancel" type="button">돌아가기</button></div>
+  </section>
+  <section id="list-view">
+    <div class="actions"><button id="load" type="button" disabled>지금 작업 · 이어갈 지점 남기기</button></div>
+    <p id="empty" hidden>아직 남겨둔 작업이 없습니다. 지금 작업에서 돌아와 할 일과 시작 탭을 남겨보세요.</p>
+    <div id="tasks"></div>
+    <button id="more-tasks" type="button" hidden>작업 50개 더 보기</button>
+  </section>
+  <section id="resume-view" hidden>
+    <h2 id="resume-name" tabindex="-1"></h2><p>돌아오면 하려던 일</p><p id="resume-action" class="resume-action"></p>
+    <p id="start-context"></p><button id="open-start" type="button" class="primary">이어서 시작</button>
+    <details id="reference-panel"><summary id="reference-summary">필요할 때 참고 자료 보기</summary>
+      <p>체크한 참고 자료만 열거나, 제목을 눌러 하나씩 이동할 수 있습니다.</p>
+      <div id="resume-tabs"></div><button id="resume-more" type="button" hidden>참고 자료 50개 더 보기</button>
+      <button id="open-references" type="button" disabled>선택한 참고 탭 열기</button>
+    </details>
+    <p id="resume-result" role="status"></p>
+    <div class="actions"><button id="resume-back" type="button">목록으로</button></div>
+  </section>
+  <form id="draft" hidden>
+    <h2 id="editor-title">새 작업</h2>
+    <fieldset id="editor-fields">
+      <label for="name">무슨 작업인가요?</label><input id="name" maxlength="80" required>
+      <label for="next-action">돌아와서 무엇부터 할까요? <span>(선택)</span></label>
+      <textarea id="next-action" maxlength="500" rows="2" placeholder="예: 예제 3의 시간복잡도 확인"></textarea>
+      <p class="notice">팝업을 닫으면 미저장 입력은 사라집니다. 저장 완료 표시를 확인하세요.</p>
+      <button id="refresh-tabs" type="button" hidden>현재 창으로 탭 갱신 미리보기</button>
+      <p id="replacement" class="notice" hidden>교체 미리보기입니다. 저장을 확인하면 기존 탭 목록이 교체됩니다. 작업명과 메모는 유지됩니다.</p>
+      <h2>어느 탭에서 시작할까요?</h2><p>이어갈 탭을 고르고, 필요한 참고 자료만 함께 남기세요.</p>
+      <div class="actions"><button id="all" type="button">전체 선택</button><button id="none" type="button">선택 해제</button></div>
+      <p id="selection" role="status"></p><div id="tabs"></div>
+      <button id="more" type="button" hidden>탭 50개 더 보기</button>
+      <details id="exclusions" hidden><summary>제외된 탭</summary><ul id="excluded"></ul></details>
+      <p id="validation" role="status"></p>
+      <div class="actions"><button id="save" type="submit" disabled>작업 저장</button><button id="cancel" type="button">취소 · 목록으로</button><button id="editor-delete" type="button" class="danger" hidden>이 작업 삭제</button></div>
+    </fieldset>
+  </form>
+  <footer>URL·메모는 이 기기에만 저장됩니다. 민감한 탭은 제외하세요.<br>링크 이동은 버튼을 눌렀을 때만 실행하며 열린 탭을 자동으로 닫지 않습니다.</footer>
+</main></body></html>

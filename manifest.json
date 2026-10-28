@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "작업 맥락 저장·복귀 확장",
+  "version": "0.0.1",
+  "description": "현재 창의 탭과 다음 행동을 로컬 작업으로 저장하고 관리합니다. 탭 복귀는 다음 개발 단계입니다.",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "incognito": "not_allowed",
+  "action": {
+    "default_title": "작업 맥락 저장·복귀 확장",
+    "default_popup": "popup.html"
+  }
+}
